@@ -1,0 +1,34 @@
+Problem:
+Given the head of a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list. Return the linked list sorted as well.
+
+Constraints:
+The number of nodes in the list is in the range [0, 300].
+-100 <= Node.val <= 100
+The list is guaranteed to be sorted in ascending order.
+
+Solution:
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        if (head == null) {
+            return head;
+        }
+        ListNode newHead = new ListNode(0);
+        newHead.next = head;
+        ListNode lastNode = newHead;
+        ListNode walker = head;
+        
+        while (walker != null) {
+            while (walker.next != null && walker.next.val == walker.val) {
+                walker = walker.next;
+            }
+            if (lastNode.next == walker) {
+                lastNode = lastNode.next;
+            } else {
+                lastNode.next = walker.next;
+            }
+            //walker.next = pointer;
+            walker = walker.next;
+        }
+        return newHead.next; 
+    }
+}
