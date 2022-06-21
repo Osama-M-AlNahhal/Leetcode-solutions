@@ -1,0 +1,69 @@
+Problem:
+Given an array of integers nums sorted in non-decreasing order, find the starting and ending position of a given target value.
+If target is not found in the array, return [-1, -1].
+You must write an algorithm with O(log n) runtime complexity.
+
+
+Constraints:
+0 <= nums.length <= 105
+-109 <= nums[i] <= 109
+nums is a non-decreasing array.
+-109 <= target <= 109
+
+
+Solution:
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        int[] output = new int[2];
+        if (nums.length < 1) {
+            output[0] = -1;
+            output[1] = -1;
+            return output;
+        }
+        output[0] = findMin(nums,target);
+        output[1] = findMax(nums,target);
+        
+        return output;
+
+    }
+    public int findMin(int[] nums, int target) {
+        int start = 0;
+        int end = nums.length -1;
+        int last = -1;
+        int mid = start + (end - start) / 2;
+        
+        while (start <= end) {
+            mid = start + (end - start) / 2;
+            if (nums[mid] >= target) {
+               end = mid-1;
+            } else {
+                start = mid+1;
+            }
+            if (nums[mid] == target) {
+                last = mid;
+            }
+        }
+        return last;
+    }
+    
+    public int findMax(int[] nums, int target) {
+        int start = 0;
+        int last = -1;
+        int end = nums.length-1;
+        int mid = start + (end - start) / 2;
+        
+        while (start <= end) {
+            mid = start + (end - start) / 2;
+            if (nums[mid] <= target) {
+                start = mid+1;
+            } else {
+                end = mid-1;
+            }
+            if (nums[mid] == target) {
+                last = mid;
+            }
+        }
+        return last;
+
+    }
+}
