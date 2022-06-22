@@ -1,0 +1,61 @@
+Problem:
+Given two strings s and t, return true if they are equal when both are typed into empty text editors. '#' means a backspace character.
+Note that after backspacing an empty text, the text will continue empty.
+
+
+Constraints:
+1 <= s.length, t.length <= 200
+s and t only contain lowercase letters and '#' characters.
+ 
+
+Follow up: Can you solve it in O(n) time and O(1) space?
+
+
+Solution:
+class Solution {
+    public boolean backspaceCompare(String s, String t) {
+        Stack<Character> stack1 = new Stack<Character>();
+        Stack<Character> stack2 = new Stack<Character>();
+        int pointer = 0;
+        
+        while (pointer < s.length()) {
+            if (s.charAt(pointer) == '#') {
+                if (stack1.isEmpty() == true) {
+                    
+                } else {
+                    stack1.pop();
+                }
+            } else {
+                stack1.push(s.charAt(pointer));
+            }
+            pointer++;
+        }
+        pointer = 0;
+        while (pointer < t.length()) {
+            if (t.charAt(pointer) == '#') {
+                if (stack2.isEmpty() == true) {
+                    pointer++;
+                    continue;
+                } else {
+                    stack2.pop();
+                }
+            } else {
+                stack2.push(t.charAt(pointer));
+            }
+            pointer++;
+        }
+        
+        if (stack1.size() != stack2.size()) {
+            return false;
+        }
+        while (!stack1.isEmpty()) {
+            if (stack1.peek() == stack2.peek()) {
+                stack1.pop();
+                stack2.pop();
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+}
