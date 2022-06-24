@@ -1,0 +1,97 @@
+Problem:
+You are given a perfect binary tree where all leaves are on the same level, and every parent has two children. The binary tree has the following definition:
+
+struct Node {
+  int val;
+  Node *left;
+  Node *right;
+  Node *next;
+}
+
+Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.
+Initially, all next pointers are set to NULL.
+
+
+Constraints:
+The number of nodes in the tree is in the range [0, 212 - 1].
+-1000 <= Node.val <= 1000
+ 
+Follow-up:
+You may only use constant extra space.
+The recursive approach is fine. You may assume implicit stack space does not count as extra space for this problem.
+
+
+Solution:
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public Node left;
+    public Node right;
+    public Node next;
+
+    public Node() {}
+    
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val, Node _left, Node _right, Node _next) {
+        val = _val;
+        left = _left;
+        right = _right;
+        next = _next;
+    }
+};
+*/
+
+class Solution {
+    public Node connect(Node root) {
+        Queue<Node> queue1 = new LinkedList<Node>();
+        Queue<Node> queue2 = new LinkedList<Node>();
+        if (root == null) {
+            return null;
+        }
+        Node current = root;
+        Node head = root;
+        
+        queue1.add(root);
+        
+        do {
+            while (!queue1.isEmpty()) {
+                current = queue1.remove();
+                
+                if (queue1.peek() != null) {
+                    current.next = queue1.peek();
+                } else {
+                    current.next = null;
+                }
+                
+                if (current.left != null) {
+                    queue2.add(current.left);
+                }
+                if (current.right != null) {
+                    queue2.add(current.right);
+                }
+            }
+            while (!queue2.isEmpty()) {
+                current = queue2.remove();
+                
+                if (queue2.peek() != null) {
+                    current.next = queue2.peek();
+                } else {
+                    current.next = null;
+                }
+                
+                if (current.left != null) {
+                    queue1.add(current.left);
+                }
+                if (current.right != null) {
+                    queue1.add(current.right);
+                }
+            }
+        } while (!queue1.isEmpty() || !queue2.isEmpty());
+        
+        return head;
+    }
+}
