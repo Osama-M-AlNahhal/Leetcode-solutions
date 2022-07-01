@@ -1,0 +1,40 @@
+Problem:
+Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+Note that you must do this in-place without making a copy of the array.
+
+
+Constraints:
+1 <= nums.length <= 104
+-231 <= nums[i] <= 231 - 1
+
+Follow up: Could you minimize the total number of operations done?
+
+
+
+Solution:
+class Solution {
+    public void moveZeroes(int[] nums) {
+        if (nums.length == 1) {
+            return;
+        }
+        
+        int slowPointer = 0;
+        while (nums[slowPointer] != 0) {
+            if (slowPointer == nums.length - 1) {
+                return;
+            } else {
+                slowPointer++;
+            }
+        }
+        for (int fastPointer = slowPointer + 1; fastPointer < nums.length; fastPointer++) {
+            if (nums[fastPointer] == 0) {
+                continue;
+            } else {
+                nums[slowPointer] = nums[fastPointer];
+                nums[fastPointer] = 0;
+                slowPointer++;
+            }
+        }
+
+    }
+}
