@@ -1,0 +1,58 @@
+Problem: 
+Given two strings s1 and s2, return true if s2 contains a permutation of s1, or false otherwise.
+In other words, return true if one of s1's permutations is the substring of s2.
+
+
+Constraints:
+1 <= s1.length, s2.length <= 104
+s1 and s2 consist of lowercase English letters.
+
+
+Solution: 
+class Solution {
+    public boolean checkInclusion(String s1, String s2) {
+        if (s1.length() > s2.length()) {
+            return false;
+        }
+        
+        int start = 0;
+        int end = s1.length()-1;
+        int[] indecies1 = new int[26];
+        int[] indecies2 = new int[26];
+        
+        fill(s1,indecies1,0,s1.length());
+        
+        while (end < s2.length()) {
+            //check frequency
+            reset(indecies2);
+            fill(s2,indecies2,start,end+1);
+            
+            //if frequency is wrong, move forward one step, reset the array and repeat
+            if (checkFrequency(indecies1,indecies2)) {
+                return true;
+            }
+            start++;
+            end++;
+        }
+        return false;
+    }
+    public void fill(String s, int[] indecies, int start, int end){
+        for (int i = start; i < end;i++) {
+            indecies[s.charAt(i) - 'a']++;
+        }
+    }
+    public boolean checkFrequency(int[] indecies1, int[] indecies2) {
+        for (int i = 0; i < 26; i++) {
+            if (indecies1[i] != indecies2[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public void reset(int[] indecies) {
+        for (int i = 0; i < 26; i++) {
+            indecies[i] = 0;
+        }
+        return;
+    }
+}
