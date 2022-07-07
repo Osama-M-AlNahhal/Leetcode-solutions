@@ -1,0 +1,52 @@
+Problem: 
+Given a string s, reverse the order of characters in each word within a sentence while still preserving whitespace and initial word order.
+
+
+Constraints:
+1 <= s.length <= 5 * 104
+s contains printable ASCII characters.
+s does not contain any leading or trailing spaces.
+There is at least one word in s.
+All the words in s are separated by a single space.
+
+
+
+Solution:
+class Solution {
+    public String reverseWords(String s) {
+        int high = 0;
+        int lastSpace = -1;
+        int low = 0;
+        String output = "";
+        int walker = 0;
+        for (;walker < s.length();walker++) {
+            if (s.charAt(walker)==' ') {
+                low = lastSpace +1;
+                high = walker-1;
+                lastSpace = walker;
+                
+                while (low <= high) {
+                    output = output + s.charAt(high);
+                    high--;
+                }
+                if (walker == s.length() -1) {
+                    continue;
+                } else {
+                    output = output + " ";
+                }
+                
+            } else {
+                continue;
+            }
+        }
+        low = lastSpace +1;
+        high = walker-1;
+
+        while (low <= high) {
+            output = output + s.charAt(high);
+            high--;
+        }
+        return output;
+    }
+    
+}
