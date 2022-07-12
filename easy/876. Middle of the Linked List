@@ -1,0 +1,45 @@
+Problem:
+Given the head of a singly linked list, return the middle node of the linked list.
+If there are two middle nodes, return the second middle node.
+
+
+Constraints:
+The number of nodes in the list is in the range [1, 100].
+1 <= Node.val <= 100
+
+
+Solution:
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode middleNode(ListNode head) {
+        int size = 1;
+        ListNode walker = head;
+        while (walker.next != null) {
+            size++;
+            walker = walker.next;
+        }
+        if (size == 1) {
+            return head;
+        } else if (size == 2) {
+            return head.next;
+        }
+        
+        walker = head;
+        size /= 2;
+        while (size > 0) {
+            walker = walker.next;
+            size--;
+        }
+        
+        return walker;
+    }
+}
