@@ -1,0 +1,45 @@
+Problem:
+Given an integer array nums sorted in non-decreasing order, return an array of the squares of each number sorted in non-decreasing order.
+
+
+
+Constraints:
+1 <= nums.length <= 104
+-104 <= nums[i] <= 104
+nums is sorted in non-decreasing order.
+ 
+
+Follow up: Squaring each element and sorting the new array is very trivial, could you find an O(n) solution using a different approach?
+
+
+
+
+Solution:
+class Solution {
+    public int[] sortedSquares(int[] nums) {
+        
+        int solution[] = new int[nums.length];
+        int start = 0;
+        int end = nums.length -1;
+        int index = nums.length -1;
+        int firstSquare = 0;
+        int lastSquare = 0;
+        
+        while (start < end) {
+            firstSquare = (int)Math.pow(nums[start],2);
+            lastSquare = (int)Math.pow(nums[end],2);
+            
+            if (firstSquare > lastSquare) {
+                solution[index] = firstSquare;
+                start++;
+                index--;
+            } else {
+                solution[index] = lastSquare;
+                end--;
+                index--;
+            }
+        }
+        solution[0] = (int)Math.pow(nums[end],2);
+        return solution;
+    }
+}
