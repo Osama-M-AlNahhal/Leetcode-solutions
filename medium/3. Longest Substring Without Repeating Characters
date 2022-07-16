@@ -1,0 +1,40 @@
+Problem:
+Given a string s, find the length of the longest substring without repeating characters.
+
+
+Constraints:
+0 <= s.length <= 5 * 104
+s consists of English letters, digits, symbols and spaces.
+
+
+Solution:
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        if (s.length() < 2) {
+            return s.length();
+        }
+        int start = 0;
+        int end = 1;
+        int maxSize = 1;
+        int currentSize = 1;
+        int[] indecies = new int[256];
+        
+        indecies[(int)s.charAt(start)]++;
+        
+        while (end < s.length()) {
+            if (indecies[(int)s.charAt(end)] > 0) {
+                indecies[(int)s.charAt(start)]--;
+                start++;
+                currentSize--;
+            } else {
+                indecies[(int)s.charAt(end)]++;
+                end++;
+                currentSize++;
+                if (currentSize > maxSize) {
+                    maxSize = currentSize;
+                }
+            }
+        }
+        return maxSize;
+    }
+}
